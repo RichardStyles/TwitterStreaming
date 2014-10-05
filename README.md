@@ -22,11 +22,32 @@ pip install requests
 pip install requests_oauthlib
 ```
 
-Twitter OAuth tokens & application keys are required to be added to config.py.
+Twitter OAuth tokens &amp; application keys are required to be added to config.py.
 Get keys from <a href='https://dev.twitter.com/oauth/overview/application-owner-access-tokens'>dev.twitter.com</a>
 Place keys in config-blank.py and rename/copy to config.py.
 
-
+<h3>Configuration</h3>
+<p>All user configurations are defined in config.py (see config-blank.py). Currently required:</p>
+<ul>
+	<li>Twitter API App Key</li>
+	<li>Twitter API App Secret</li>
+	<li>Twitter API OAuth Token</li>
+	<li>Twitter API OAuth Token Secret</li>
+	<li><p>Twitter Streaming API Parameters<br>Example supplied is English only tweet, posted from London (bound box)</p></li>
+</ul>
+<p>Streaming API parameters must be in the following format:</p>
+```
+STREAM_PARAMS = {'parameter_name':'parameter_value','parameter_required_array':[value_1,value_2,value_3,value4]}
+```
+<h4>Example config.py</h4>
+<p>Below is an example (without comments) of a config.py for twitterstream application.
+```
+APP_KEY = 'thisisasecret'
+APP_SECRET = 'thisisasecret'
+OAUTH_TOKEN = 'thisisasecret'
+OAUTH_TOKEN_SECRET = 'thisisasecret'
+STREAM_PARAMS = {'language':'en','locations':[-0.489,51.28,0.236,51.686]}
+```
 <h3>Run Application</h3>
 ```
 python twitterstream.py
