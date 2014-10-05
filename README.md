@@ -1,10 +1,11 @@
-TwitterStreaming
+Python Twitter Streaming
 ================
-Python Application to use Twitter's streaming API to save tweet data to a compressed csv.gz format.
+<p>Python Application to use Twitter's streaming API to save tweet data to a compressed csv.gz format.</p>
 
-Python version 2.7
+<p>Developed in Python version 2.7.7</p>
 
-New CSV.GZ files will be added to the streamdata folder (gitignore'd by default)
+<p>New CSV.GZ files will be added to the streamdata folder (gitignore'd by default)<br />
+Files are created every hour in the following format data-YEAR-MONTH-DAY-HOUR.csv.gz this is to allow post-processing of this data stream.<br />As Twitter's API Documents advise buffering data from the stream before processing.</p>
 
 <h3>Submodules</h3>
 This project uses two other git repos
@@ -13,8 +14,8 @@ This project uses two other git repos
 <li><a href='https://github.com/jdunck/python-unicodecsv'>Python Unicodecsv</a></li>
 </ul>
 
-These currently do not need to be installed via pip as the twitterstream.py application will import from the submodules.
-Submodule requirements do need to be installed.
+<p>These currently do not need to be installed via pip as the twitterstream.py application will import from the submodules. Provided the submodules are initialised.<br />
+Submodule requirements do need to be installed, see below.</p>
 
 ```
 pip install requests
@@ -25,3 +26,8 @@ Twitter OAuth tokens & application keys are required to be added to config.py.
 Get keys from <a href='https://dev.twitter.com/oauth/overview/application-owner-access-tokens'>dev.twitter.com</a>
 Place keys in config-blank.py and rename/copy to config.py.
 
+
+<h3>Run Application</h3>
+```
+python twitterstream.py
+```
