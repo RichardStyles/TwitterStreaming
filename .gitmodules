@@ -1,3 +1,6 @@
 [submodule "twitter"]
 	path = twitter
 	url = git@github.com:ryanmcgrath/twython.git
+[submodule "unicodecsv"]
+	path = unicodecsv
+	url = git@github.com:jdunck/python-unicodecsv.git
