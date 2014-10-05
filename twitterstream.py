@@ -116,8 +116,19 @@ try:
 
 	#		locations=[-0.489,51.28,0.236,51.686]
 	#			get tweets posted from specific location (example given is London, UK)
-
-	stream.statuses.filter(language='en',locations=[-0.489,51.28,0.236,51.686])
+	
+	# define params
+	params = {'language':'en','locations':[-0.489,51.28,0.236,51.686]}
+	print "Listing current parameters"
+	for k,v in params.iteritems():
+		if isinstance(v, basestring):
+			print k + ' : ' + v
+		elif isinstance(v, ( int, long )):
+			print k + ' : ' + str(v)
+		elif isinstance(v, (list, dict)):
+			print k + ' : ' + str(v).strip('[]')
+	print "Start Stream:"
+	stream.statuses.filter(**params)
 
 #	Catch ctrl+c exit from command line
 except (KeyboardInterrupt, SystemExit):
