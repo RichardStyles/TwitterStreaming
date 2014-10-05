@@ -36,6 +36,7 @@ Place keys in config-blank.py and rename/copy to config.py.
 	<li>Twitter Streaming API Parameters<br>Example supplied is English only tweet, posted from London (bound box)</li>
 </ul>
 <p>Full list of Twitter Streaming API parameters avaliable <a href='https://dev.twitter.com/streaming/overview/request-parameters'>here</a>.<br />
+For help creating bounding box coordinates, try <a href='http://boundingbox.klokantech.com/'>here</a> and select CSV from the copy &amp; paste option.<br />
 Streaming API parameters must be in the following format:</p>
 
 ```
