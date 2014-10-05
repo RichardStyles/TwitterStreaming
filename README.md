@@ -33,16 +33,11 @@ Place keys in config-blank.py and rename/copy to config.py.
 	<li>Twitter API App Secret</li>
 	<li>Twitter API OAuth Token</li>
 	<li>Twitter API OAuth Token Secret</li>
-<<<<<<< HEAD
 	<li>Twitter Streaming API Parameters<br>Example supplied is English only tweet, posted from London (bound box)</li>
 </ul>
 <p>Full list of Twitter Streaming API parameters avaliable <a href='https://dev.twitter.com/streaming/overview/request-parameters'>here</a>.<br />
 Streaming API parameters must be in the following format:</p>
-=======
-	<li><p>Twitter Streaming API Parameters<br>Example supplied is English only tweet, posted from London (bound box)</p></li>
-</ul>
-<p>Streaming API parameters must be in the following format:</p>
->>>>>>> a06c8945caf5fd967cd34d3bb82fbd5ac97d7078
+
 ```
 STREAM_PARAMS = {'parameter_name':'parameter_value','parameter_required_array':[value_1,value_2,value_3,value4]}
 ```
