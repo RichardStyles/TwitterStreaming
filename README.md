@@ -31,3 +31,4 @@ Place keys in config-blank.py and rename/copy to config.py.
 ```
 python twitterstream.py
 ```
+![Bash Example](https://www.dropbox.com/s/msx1au6i3i66jlj/Screenshot%202014-10-05%2021.20.40.png?dl=1 "Bash example")
