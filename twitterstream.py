@@ -1,6 +1,10 @@
 ﻿# -*- coding: utf-8 -*-
+'''
+	Save Twitter Streaming API to a compressed CSV.GZ file 
+
+	author:: Richard Styles
+'''
 import sys
-#import csv
 sys.path.insert(0,'./twitter');
 sys.path.insert(0,'./unicodecsv');
 from twython import TwythonStreamer
@@ -11,10 +15,18 @@ import datetime
 import os.path
 import gzip
 
-#allkeys = ['user_profile_banner_url','user_location','possibly_sensitive','coordinates_coordinates','coordinates','geo','entities_media','extended_entities_media']
+# pre-list known optional keys which are not included in all Stream responses. - ensures CSV integrity
 allkeys = ['coordinates','geo','entities_media','extended_entities_media','place_attributes_street_address','entities_trends','coordinates_coordinates','coordinates_type','geo_type','geo_coordinates','user_profile_banner_url']
+
+# set initial count for processed tweets
 tcount = 0
+
 def flatten(d, parent_key='', sep='_'):
+	'''	take multi-dimension dictionary flatten and rename keys accordingly.
+
+		Args:
+			d (dict) : multi dimension dictionary 
+	'''
 	items = []
 	for k, v in d.items():
 		new_key = parent_key + sep + k if parent_key else k
@@ -24,6 +36,13 @@ def flatten(d, parent_key='', sep='_'):
 			items.append((new_key, v))
 	return dict(items)
 def checkOptKeys(d):
+	'''	Check flattened array for any 'extra' keys in response.
+
+		if `** new key found:` prints then key needs to be added to allkeys list
+		on first response standard keys are added.
+
+		if key does not exist on response then default to empty string.
+	'''
 	for key, value in d.iteritems():
 		if key not in allkeys:
 			print "** new key found: " + key
@@ -34,7 +53,9 @@ def checkOptKeys(d):
 	return d
 def tweetCounter():
     global tcount
+    # increment tcount
     tcount += 1
+    # output infomation to console
     sys.stdout.write('\rtweet %d recorded' % tcount)
     sys.stdout.flush()
     return
@@ -50,28 +71,37 @@ class StreamToCSV(TwythonStreamer):
 		# order keys to maintain csv integrity
 		dd = collections.OrderedDict(sorted(dd.items()))
 
+		# get keys for csv writer
 		rowData = dd.values()
 		rowHeader = dd.keys()
-		# set None values to empty string
-		#rowData = ['' if v is None else v for v in row]
+
 		# get current date and hour
 		now = datetime.datetime.now()
+		
 		# create filename based on date and hour
 		f = 'streamdata/data-'+now.strftime("%Y-%m-%d-%H")
+		
 		# does this file already exisit ?
 		addHeader = os.path.isfile('%s.csv.gz' % f)
+
 		# open csv file or create to write to
-		#print allkeys
 		with gzip.open('%s.csv.gz' % f, 'a') as csvfile:
 			twitterbuffer = csv.writer(csvfile,allkeys)
-			#if(addHeader == False):
-			twitterbuffer.writerow(rowHeader)
+			# is this a new file? if so add headers
+			if(addHeader == False):
+				twitterbuffer.writerow(rowHeader)
+			# write data row
 			twitterbuffer.writerow(rowData)
-			tcount += 1
+
+			# increment twitter counter on console display
 			tweetCounter()
+
+			# ensure file close 
 			csvfile.close()
 
 	def on_error(self, status_code, data):
+		# default error output from tywthonstreamer 
+		# TODO: improve ?
 		print status_code, data
 
 # Requires Authentication as of Twitter API v1.1
@@ -79,7 +109,17 @@ stream = StreamToCSV(APP_KEY, APP_SECRET,OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 try:
 	print "*****  Twitter Streaming API  *****"
+
+	#	Initial example
+	# 		language='en'
+	#			request english only tweets
+
+	#		locations=[-0.489,51.28,0.236,51.686]
+	#			get tweets posted from specific location (example given is London, UK)
+
 	stream.statuses.filter(language='en',locations=[-0.489,51.28,0.236,51.686])
+
+#	Catch ctrl+c exit from command line
 except (KeyboardInterrupt, SystemExit):
 	print "\n*****       End program       *****"
 	sys.exit(0)
