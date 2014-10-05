@@ -5,3 +5,4 @@ streamdata/.DS_Store
 data-2014-10-05-06.csv
 data*.csv
 streamdata/data-*(.csv|.csv.gz)
+streamdata/*
