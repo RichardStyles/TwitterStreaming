@@ -112,17 +112,9 @@ stream = StreamToCSV(APP_KEY, APP_SECRET,OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 try:
 	print "*****  Twitter Streaming API  *****"
 
-	#	Initial example
-	# 		language='en'
-	#			request english only tweets
 
-	#		locations=[-0.489,51.28,0.236,51.686]
-	#			get tweets posted from specific location (example given is London, UK)
-	
-	# define params
-	params = {'language':'en','locations':[-0.489,51.28,0.236,51.686]}
 	print "Listing current parameters"
-	for k,v in params.iteritems():
+	for k,v in STREAM_PARAMS.iteritems():
 		if isinstance(v, basestring):
 			print k + ' : ' + v
 		elif isinstance(v, ( int, long )):
@@ -130,7 +122,7 @@ try:
 		elif isinstance(v, (list, dict)):
 			print k + ' : ' + str(v).strip('[]')
 	print "Start Stream:"
-	stream.statuses.filter(**params)
+	stream.statuses.filter(**STREAM_PARAMS)
 
 #	Catch ctrl+c exit from command line
 except (KeyboardInterrupt, SystemExit):
