@@ -111,16 +111,17 @@ stream = StreamToCSV(APP_KEY, APP_SECRET,OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 try:
 	print "*****  Twitter Streaming API  *****"
+	print "  Press ctrl + c to exit"
 
 
 	print "Listing current parameters"
 	for k,v in STREAM_PARAMS.iteritems():
 		if isinstance(v, basestring):
-			print k + ' : ' + v
+			print '  %7s : %s' % (k,v)
 		elif isinstance(v, ( int, long )):
-			print k + ' : ' + str(v)
+			print '  %7s : %s' % (k,str(v))
 		elif isinstance(v, (list, dict)):
-			print k + ' : ' + str(v).strip('[]')
+			print '  %7s : %s' % (k,str(v).strip('[]'))
 	print "Start Stream:"
 	stream.statuses.filter(**STREAM_PARAMS)
 
