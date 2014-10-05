@@ -8,6 +8,7 @@ import unicodecsv as csv
 from config import *
 import datetime
 import os.path
+import gzip
 
 
 class StreamToCSV(TwythonStreamer):
@@ -19,9 +20,9 @@ class StreamToCSV(TwythonStreamer):
 		# create filename based on date and hour
 		f = 'streamdata/data-'+now.strftime("%Y-%m-%d-%H")
 		# does this file already exisit ?
-		addHeader = os.path.isfile('%s.csv' % f)
+		addHeader = os.path.isfile('%s.csv.gz' % f)
 		# open csv file or create to write to
-		with open('%s.csv' % f, 'a') as csvfile:
+		with gzip.open('%s.csv.gz' % f, 'a') as csvfile:
 			twitterbuffer = csv.writer(csvfile, dialect='excel')
 			if(addHeader == False):
 				twitterbuffer.writerow(['contributors','truncated','text','in_reply_to_status_id','id','favorite_count','source','retweeted','coordinates','timestamp_ms','entities','entities-user_mentions','entities-symbols','entities-trends','entities-hashtags','entities-urls','in_reply_to_screen_name','id_str','retweet_count','in_reply_to_user_id','favorited','user','user-follow_request_sent','user-profile_use_background_image','user-default_profile_image','user-id','user-verified','user-profile_image_url_https','user-profile_sidebar_fill_color','user-profile_text_color','user-followers_count','user-profile_sidebar_border_color','user-id_str','user-profile_background_color','user-listed_count','user-profile_background_image_url_https','user-utc_offset','user-statuses_count','user-description','user-friends_count','user-location','user-profile_link_color','user-profile_image_url','user-following','user-geo_enabled','user-profile_banner_url','user-profile_background_image_url','user-name','user-lang','user-profile_background_tile','user-favourites_count','user-screen_name','user-notifications','user-url','user-created_at','user-contributors_enabled','user-time_zone','user-protected','user-default_profile','user-is_translator','geo','in_reply_to_user_id_str','possibly_sensitive','lang','created_at','filter_level','in_reply_to_status_id_str','place','place-full_name','place','place-url','place-country','place-place_type','place-bounding_box','place-bounding_box-type','place-bounding_box-coordinates','place-country_code','place-attributes','id','name'])
