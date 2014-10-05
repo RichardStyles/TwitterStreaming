@@ -36,6 +36,7 @@ def flatten(d, parent_key='', sep='_'):
 			items.append((new_key, v))
 	return dict(items)
 def checkOptKeys(d):
+	global tcount
 	'''	Check flattened array for any 'extra' keys in response.
 
 		if `** new key found:` prints then key needs to be added to allkeys list
@@ -45,7 +46,8 @@ def checkOptKeys(d):
 	'''
 	for key, value in d.iteritems():
 		if key not in allkeys:
-			print "** new key found: " + key
+			if tcount > 0:
+				print "** new key found - update required: " + key
 			allkeys.append(key)
 	for k in allkeys:
 		if not d.has_key(k):
