@@ -10,15 +10,17 @@ import datetime
 import os.path
 
 
-class MyStreamer(TwythonStreamer):
+class StreamToCSV(TwythonStreamer):
 	def on_success(self, data):
-		#print data
-		
+		# Flatten data
 		dataArr = [data['contributors'],data['truncated'],data['text'],data['in_reply_to_status_id'],data['id'],data['favorite_count'],data['source'],data['retweeted'],data['coordinates'],data['timestamp_ms'],data['entities'],data['entities']['user_mentions'],data['entities']['symbols'],data['entities']['trends'],data['entities']['hashtags'],data['entities']['urls'],data['in_reply_to_screen_name'],data['id_str'],data['retweet_count'],data['in_reply_to_user_id'],data['favorited'],data['user'],data['user']['follow_request_sent'],data['user']['profile_use_background_image'],data['user']['default_profile_image'],data['user']['id'],data['user']['verified'],data['user']['profile_image_url_https'],data['user']['profile_sidebar_fill_color'],data['user']['profile_text_color'],data['user']['followers_count'],data['user']['profile_sidebar_border_color'],data['user']['id_str'],data['user']['profile_background_color'],data['user']['listed_count'],data['user']['profile_background_image_url_https'],data['user']['utc_offset'],data['user']['statuses_count'],data['user']['description'],data['user']['friends_count'],data['user']['location'],data['user']['profile_link_color'],data['user']['profile_image_url'],data['user']['following'],data['user']['geo_enabled'],data['user']['profile_background_image_url'],data['user']['name'],data['user']['lang'],data['user']['profile_background_tile'],data['user']['favourites_count'],data['user']['screen_name'],data['user']['notifications'],data['user']['url'],data['user']['created_at'],data['user']['contributors_enabled'],data['user']['time_zone'],data['user']['protected'],data['user']['default_profile'],data['user']['is_translator'],data['geo'],data['in_reply_to_user_id_str'],data['possibly_sensitive'],data['lang'],data['created_at'],data['filter_level'],data['in_reply_to_status_id_str'],data['place'],data['place']['full_name'],data['place'],data['place']['url'],data['place']['country'],data['place']['place_type'],data['place']['bounding_box'],data['place']['bounding_box']['type'],data['place']['bounding_box']['coordinates'],data['place']['country_code'],data['place']['attributes'],data['id']]
+		# get current date and hour
 		now = datetime.datetime.now()
+		# create filename based on date and hour
 		f = 'streamdata/data-'+now.strftime("%Y-%m-%d-%H")
-
+		# does this file already exisit ?
 		addHeader = os.path.isfile('%s.csv' % f)
+		# open csv file or create to write to
 		with open('%s.csv' % f, 'a') as csvfile:
 			twitterbuffer = csv.writer(csvfile, dialect='excel')
 			if(addHeader == False):
@@ -36,7 +38,7 @@ class MyStreamer(TwythonStreamer):
 		print status_code, data
 
 # Requires Authentication as of Twitter API v1.1
-stream = MyStreamer(APP_KEY, APP_SECRET,OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+stream = StreamToCSV(APP_KEY, APP_SECRET,OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 #stream.statuses.filter(track='twitter')
 stream.statuses.filter(language='en',locations=[-0.489,51.28,0.236,51.686])
