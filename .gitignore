@@ -4,3 +4,4 @@ config.py
 data-*(.csv|.csv.gz)
 streamdata/.DS_Store
 streamdata/data-*(.csv|.csv.gz)
+streamdata/data-*.csv.gz

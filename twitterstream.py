@@ -16,7 +16,7 @@ import os.path
 import gzip
 
 # pre-list known optional keys which are not included in all Stream responses. - ensures CSV integrity
-allkeys = ['coordinates','geo','entities_media','extended_entities_media','place_attributes_street_address','entities_trends','coordinates_coordinates','coordinates_type','geo_type','geo_coordinates','user_profile_banner_url']
+allkeys = ['coordinates','geo','entities_media','extended_entities_media','place_attributes_street_address','entities_trends','coordinates_coordinates','coordinates_type','geo_type','geo_coordinates','user_profile_banner_url','scopes_place_ids','place']
 
 # set initial count for processed tweets
 tcount = 0
