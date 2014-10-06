@@ -45,10 +45,14 @@ For help creating bounding box coordinates, try <a href='http://boundingbox.klok
 Streaming API parameters must be in the following format:</p>
 
 ```
-STREAM_PARAMS = {'parameter_name':'parameter_value','parameter_required_array':[value_1,value_2,value_3,value4]}
+[STREAM_PARAMS]		# do not change this line
+
+parameter_name ='parameter_value'
+parameter_required_array = value_1,value_2,value_3,value4
+
 ```
 <h4>Example config.ini</h4>
-<p>Below is an example (without comments) of a config.ini for twitterstream application.
+<p>Below is an example (without comments) of a config.ini for twitterstream application.</p>
 ```
 APP_KEY = 'secretkey'
 APP_SECRET = 'secretkey'
