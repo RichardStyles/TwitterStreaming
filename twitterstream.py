@@ -14,6 +14,10 @@ from config import *
 import datetime
 import os.path
 import gzip
+from configobj import ConfigObj
+
+cfg = ConfigObj('config.ini')
+STREAM_PARAMS = cfg['STREAM_PARAMS']
 
 # pre-list known optional keys which are not included in all Stream responses. - ensures CSV integrity
 allkeys = ['coordinates','geo','entities_media','extended_entities_media','place_attributes_street_address','entities_trends','coordinates_coordinates','coordinates_type','geo_type','geo_coordinates','user_profile_banner_url','scopes_place_ids','place']
@@ -107,7 +111,7 @@ class StreamToCSV(TwythonStreamer):
 		print status_code, data
 
 # Requires Authentication as of Twitter API v1.1
-stream = StreamToCSV(APP_KEY, APP_SECRET,OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+stream = StreamToCSV(cfg['APP_KEY'], cfg['APP_SECRET'],cfg['OAUTH_TOKEN'], cfg['OAUTH_TOKEN_SECRET'])
 
 try:
 	print "*****  Twitter Streaming API  *****"
@@ -122,7 +126,10 @@ try:
 			print '  %7s : %s' % (k,str(v))
 		elif isinstance(v, (list, dict)):
 			print '  %7s : %s' % (k,str(v).strip('[]'))
-	print "Start Stream:"
+	
+	# get current date and hour - program start
+	now = datetime.datetime.now()
+	print "Stream started at: " + now.strftime("%Y-%m-%d %H:%M:%S")
 	stream.statuses.filter(**STREAM_PARAMS)
 
 #	Catch ctrl+c exit from command line
