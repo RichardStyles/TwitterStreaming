@@ -16,15 +16,6 @@ import os.path
 import gzip
 from configobj import ConfigObj
 
-cfg = ConfigObj('config.ini')
-STREAM_PARAMS = cfg['STREAM_PARAMS']
-
-# pre-list known optional keys which are not included in all Stream responses. - ensures CSV integrity
-allkeys = ['coordinates','geo','entities_media','extended_entities_media','place_attributes_street_address','entities_trends','coordinates_coordinates','coordinates_type','geo_type','geo_coordinates','user_profile_banner_url','scopes_place_ids','place']
-
-# set initial count for processed tweets
-tcount = 0
-
 def flatten(d, parent_key='', sep='_'):
 	'''	take multi-dimension dictionary flatten and rename keys accordingly.
 
@@ -71,6 +62,9 @@ class StreamToCSV(TwythonStreamer):
 	def on_success(self, data):
 		global tcount
 		global allkeys
+		global SET_FILE_DATETIME
+		global SET_FILE
+
 		# Flatten data
 		dd = flatten(data)
 		dd = checkOptKeys(dd)
@@ -85,7 +79,7 @@ class StreamToCSV(TwythonStreamer):
 		now = datetime.datetime.now()
 		
 		# create filename based on date and hour
-		f = 'streamdata/data-'+now.strftime("%Y-%m-%d-%H")
+		f = SET_FILE+now.strftime(SET_FILE_DATETIME)
 		
 		# does this file already exisit ?
 		addHeader = os.path.isfile('%s.csv.gz' % f)
@@ -110,15 +104,24 @@ class StreamToCSV(TwythonStreamer):
 		# TODO: improve ?
 		print status_code, data
 
+# get configuration from config.ini
+cfg = ConfigObj('config.ini')
+STREAM_PARAMS = cfg['STREAM_PARAMS']
+SET_FILE = cfg['FOLDER'] + cfg['FILE_NAME']
+SET_FILE_DATETIME = cfg['FILE_DATETIME']
+
+# pre-list known optional keys which are not included in all Stream responses. - ensures CSV integrity
+allkeys = ['coordinates','geo','entities_media','extended_entities_media','place_attributes_street_address','entities_trends','coordinates_coordinates','coordinates_type','geo_type','geo_coordinates','user_profile_banner_url','scopes_place_ids','place']
+
+# set initial count for processed tweets
+tcount = 0
 # Requires Authentication as of Twitter API v1.1
 stream = StreamToCSV(cfg['APP_KEY'], cfg['APP_SECRET'],cfg['OAUTH_TOKEN'], cfg['OAUTH_TOKEN_SECRET'])
 
 try:
 	print "*****  Twitter Streaming API  *****"
 	print "  Press ctrl + c to exit"
-
-
-	print "Listing current parameters"
+	print "  Listing current parameters"
 	for k,v in STREAM_PARAMS.iteritems():
 		if isinstance(v, basestring):
 			print '  %7s : %s' % (k,v)
@@ -129,7 +132,7 @@ try:
 	
 	# get current date and hour - program start
 	now = datetime.datetime.now()
-	print "Stream started at: " + now.strftime("%Y-%m-%d %H:%M:%S")
+	print "  Stream started at: " + now.strftime("%Y-%m-%d %H:%M:%S")
 	stream.statuses.filter(**STREAM_PARAMS)
 
 #	Catch ctrl+c exit from command line
