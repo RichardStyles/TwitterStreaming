@@ -11,11 +11,14 @@ Files are created every hour in the following format data-YEAR-MONTH-DAY-HOUR.cs
 <h3>Requirements</h3>
 
 <p>Configobj. This is used to import user editable configuration.</p>
+
 ```
 pip install configobj
+
 ```
+
 <h4>Submodules</h4>
-This project uses two other Python projects on GitHub:
+<p>This project uses two other Python projects on GitHub:</p>
 <ul>
 <li><a href='https://github.com/ryanmcgrath/twython'>twython</a></li>
 <li><a href='https://github.com/jdunck/python-unicodecsv'>Python Unicodecsv</a></li>
@@ -27,6 +30,7 @@ This project uses two other Python projects on GitHub:
 ```
 pip install requests
 pip install requests_oauthlib
+
 ```
 
 Twitter OAuth tokens &amp; application keys are required to be added to config.py.
@@ -43,16 +47,8 @@ Place keys in config-blank.py and rename/copy to config.py.
 	<li>Twitter Streaming API Parameters<br>Example supplied is English only tweet, posted from London (bound box)</li>
 </ul>
 <p>Full list of Twitter Streaming API parameters avaliable <a href='https://dev.twitter.com/streaming/overview/request-parameters'>here</a>.<br />
-For help creating bounding box coordinates, try <a href='http://boundingbox.klokantech.com/'>here</a> and select CSV from the copy &amp; paste option.<br />
-Streaming API parameters must be in the following format:</p>
+For help creating bounding box coordinates, try <a href='http://boundingbox.klokantech.com/'>here</a> and select CSV from the copy &amp; paste option.</p>
 
-```
-[STREAM_PARAMS]		# do not change this line
-
-parameter_name ='parameter_value'
-parameter_required_array = value_1,value_2,value_3,value4
-
-```
 <h4>Example config.ini</h4>
 <p>Below is an example (without comments) of a config.ini for twitterstream application.</p>
 ```
@@ -61,10 +57,38 @@ APP_SECRET = 'secretkey'
 OAUTH_TOKEN = 'secretkey'
 OAUTH_TOKEN_SECRET = 'secretkey'
 
+FOLDER = 'streamdata/'
+FILE_NAME = 'data-'
+FILE_DATETIME = "%Y-%m-%d-%H"
+
 [STREAM_PARAMS] 	# do not change this line
 language='en'
 locations= -0.489,51.28,0.236,51.686
 ```
+<h5>Config.ini detail</h5>
+<p>Additional option to se File location and file name parameters<br />
+FOLDER must already exist.<br />
+FILE_NAME is a prefix for the output file.<br />
+FILE_DATETIME is what sepearate the data based on date/time using the format:</p>
+
+<pre>
+%Y Year		%m Month	%d Day<br />
+%H Hour		%M Minute	%S Second</p>
+</pre>
+
+<p>For more date & time options <a href='https://docs.python.org/2/library/datetime.html#strftime-strptime-behavior'>see</a>
+</p>
+
+<p>Streaming API parameters must be in the following format:</p>
+
+```
+[STREAM_PARAMS]		# do not change this line
+
+parameter_name ='parameter_value'
+parameter_required_array = value_1,value_2,value_3,value4
+
+```
+
 <h3>Run Application</h3>
 ```
 python twitterstream.py
