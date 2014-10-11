@@ -14,7 +14,6 @@ Files are created every hour in the following format data-YEAR-MONTH-DAY-HOUR.cs
 
 ```
 pip install configobj
-
 ```
 
 <h4>Submodules</h4>
@@ -24,8 +23,8 @@ pip install configobj
 <li><a href='https://github.com/jdunck/python-unicodecsv'>Python Unicodecsv</a></li>
 </ul>
 
-<p>These currently do not need to be installed via pip as the twitterstream.py application will import from the submodules. Provided the submodules are initialised.</p>
-<p>Submodule requirements, do need to be installed. See below.</p>
+<p>These currently do not need to be installed via pip as the twitterstream.py application will import from the submodules. Provided the submodules are initialised.<br />
+*Submodule requirements*, do need to be installed. See below.</p>
 
 ```
 pip install requests
@@ -46,8 +45,7 @@ Place keys in config-blank.py and rename/copy to config.py.
 	<li>Twitter API OAuth Token Secret</li>
 	<li>Twitter Streaming API Parameters<br>Example supplied is English only tweet, posted from London (bound box)</li>
 </ul>
-<p>Full list of Twitter Streaming API parameters avaliable <a href='https://dev.twitter.com/streaming/overview/request-parameters'>here</a>.<br />
-For help creating bounding box coordinates, try <a href='http://boundingbox.klokantech.com/'>here</a> and select CSV from the copy &amp; paste option.</p>
+<p>Full list of Twitter Streaming API parameters avaliable <a href='https://dev.twitter.com/streaming/overview/request-parameters'>here</a>.<br />For help creating bounding box coordinates, try <a href='http://boundingbox.klokantech.com/'>here</a> and select CSV from the copy &amp; paste option.</p>
 
 <h4>Example config.ini</h4>
 <p>Below is an example (without comments) of a config.ini for twitterstream application.</p>
@@ -71,10 +69,13 @@ FOLDER must already exist.<br />
 FILE_NAME is a prefix for the output file.<br />
 FILE_DATETIME is what sepearate the data based on date/time using the format:</p>
 
-<pre>
-%Y Year		%m Month	%d Day<br />
-%H Hour		%M Minute	%S Second</p>
-</pre>
+`%Y` Year
+`%m` Month
+`%d` Day
+`%H` Hour
+`%M` Minute
+`%S` Second
+
 
 <p>For more date & time options <a href='https://docs.python.org/2/library/datetime.html#strftime-strptime-behavior'>see</a>
 </p>
